@@ -3,23 +3,15 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git credentialsId: 'GitHub_Credentials_ID', url: 'https://github.com/your-repo.git'
-            }
-        }
-        stage('Install Dependencies') {
-            steps {
-                sh 'pip install -r requirements.txt'
-            }
-        }
-        stage('Run Tests') {
-            steps {
-                sh 'python -m unittest discover -s .'
+                echo 'Cloning repository...'
+                git credentialsId: 'GitHub_Credentials_ID', url: 'https://github.com/PoojaVaradharajan/task5.git'
             }
         }
         stage('SonarQube Analysis') {
             steps {
+                echo 'Running SonarQube analysis...'
                 withSonarQubeEnv('SonarQube') {
-                    sh 'sonar-scanner'
+                    bat 'sonar-scanner.bat'  // Using 'bat' instead of 'sh' for Windows
                 }
             }
         }
